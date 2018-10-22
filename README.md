@@ -7,6 +7,42 @@ Supported editors include:
 - vim
 - SublimeText (`subl`)
 
+### Installing
+
+```
+$ cd make_c
+$ python setup.py install
+```
+
+### Running
+
+Help output:
+```
+$ make_c.py -h
+
+usage: make_c [-h] [--editor EDITOR] [--list-editors] [--skip-editor] [--tabs]
+              filename
+
+positional arguments:
+  filename         Name of the source file to create.
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --editor EDITOR  Editor to use to open the resulting source file.
+  --list-editors   List known editors.
+  --skip-editor    Create the source file but don't open it in an editor.
+  --tabs           Use tabs instead of spaces.
+```
+
+Creating and editing a file:
+
+```
+make_c foo.c
+
+#Edit in SublimeText instead:
+
+make_c foo.c --editor=subl
+```
 ### Adding editor support
 
 To add additional editors, extend the `CProgram` class and override:
