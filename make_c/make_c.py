@@ -44,7 +44,7 @@ class CProgram(object):
                 tab+"printf(\"Hello world\\n\");",
                 self.insert_code_comment, #so we can dyanmically locate its index later
                 "",
-                tab+"return ret;"
+                tab+"return ret;",
                 "}",
                 ""]
         self.lines=lines
@@ -55,7 +55,6 @@ class CProgram(object):
         if run_editor:
             self.open_in_editor()
 
-    
     def _write_to_file(self):
         try:
             with open(self.filename,"w") as outfile:
@@ -86,7 +85,13 @@ class CProgramWithSublime(CProgram):
         
         return editor_cmd
 
+class CProgramWithTextMate(CProgram):
+    EDITOR="mate"
 
+    def generate_editor_command(self):
+        line_column_arg="%d:%d" % (self.edit_line,self.edit_column)
+        editor_cmd=[self.EDITOR,"-l",line_column_arg,self.filename]
+        return editor_cmd
 
 def list_editors():
     print("Known editors:")
@@ -95,9 +100,10 @@ def list_editors():
 
 def parse_args(argv):
     parser=argparse.ArgumentParser()
-    parser.add_argument("filename",help="Name of the source file to create.")
+    grp=parser.add_mutually_exclusive_group(required=True)
+    grp.add_argument("filename",nargs='?',help="Name of the source file to create.",default=None)
+    grp.add_argument("--list-editors",help="List known editors.",action="store_true",default=False)
     parser.add_argument("--editor",help="Editor to use to open the resulting source file.")
-    parser.add_argument("--list-editors",help="List known editors.",action="store_true")
     parser.add_argument("--skip-editor",help="Create the source file but don't open it in an editor.",action="store_true")
     parser.add_argument("--tabs",help="Use tabs instead of spaces.",action="store_true")
 
