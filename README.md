@@ -6,6 +6,7 @@ Supported editors include:
 
 - vim
 - SublimeText (`subl`)
+- TextMate (`mate`)
 
 ### Installing
 
