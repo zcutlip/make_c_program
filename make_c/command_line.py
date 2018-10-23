@@ -2,7 +2,7 @@
 
 import sys
 
-import make_c
+from make_c import make_c
 
 
 
