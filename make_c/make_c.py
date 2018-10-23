@@ -156,9 +156,7 @@ def main(argv):
         print("Unknown editor: %s" % editor)
         print("Consider using --skip-editor to create source file without editing.")
         exit(1)
-
-
-     #def __init__(self,filename,spaces=True,run_editor=True):
+    
     c_program_class(filename,spaces=spaces,generate_makefile=generate_makefile,run_editor=run_editor)
 
 if __name__=="__main__":
