@@ -123,7 +123,7 @@ def parse_args(argv):
     grp=parser.add_mutually_exclusive_group(required=True)
     grp.add_argument("filename",nargs='?',help="Name of the source file to create.",default=None)
     grp.add_argument("--list-editors",help="List known editors.",action="store_true",default=False)
-    parser.add_argument("--editor",help="Editor to use to open the resulting source file.")
+    parser.add_argument("--editor",help="Editor to use to open the resulting source file.",default="vim")
     parser.add_argument("--skip-editor",help="Create the source file but don't open it in an editor.",action="store_true")
     parser.add_argument("--tabs",help="Use tabs instead of spaces.",action="store_true")
     parser.add_argument("--generate-makefile",help="Create a makefile to build the program.",action="store_true")
@@ -144,9 +144,9 @@ def main(argv):
 
     filename=args.filename
     
-    editor="vim"
-    if args.editor:
-        editor=args.editor
+    
+    
+    editor=args.editor
 
     spaces=not args.tabs
     generate_makefile=args.generate_makefile
