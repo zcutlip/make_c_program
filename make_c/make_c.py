@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 import subprocess
 import sys
 
@@ -23,7 +24,7 @@ class CProgram(object):
     TAB="\t"
     INSERT_CODE_HERE="//insert code here"
     EDITOR="vim"
-    def __init__(self,filename,spaces=True,run_editor=True):
+    def __init__(self,filename,spaces=True,generate_makefile=False,run_editor=True):
         self.filename=filename
         if spaces:
             tab=self.FOURSPACES
@@ -51,19 +52,36 @@ class CProgram(object):
         self.edit_line=self.lines.index(self.insert_code_comment)+1
         self.edit_column=len(tab)+1
 
-        self._write_to_file()
+        self._write_to_file(self.filename,self.lines)
+        if generate_makefile:
+            self.makefile_lines=self._generate_makefile()
+            self._write_to_file("Makefile",self.makefile_lines)
+
         if run_editor:
             self.open_in_editor()
 
-    def _write_to_file(self):
+    def _write_to_file(self,filename,lines):
         try:
-            with open(self.filename,"w") as outfile:
-                for line in self.lines:
+            with open(filename,"w") as outfile:
+                for line in lines:
                     outfile.write(line+"\n")
 
         except Exception as e:
             print("Error writing %s" % self.filename)
             print("%s" % str(e))
+            raise
+
+    def _generate_makefile(self):
+        basename=os.path.splitext(self.filename)[0]
+
+        lines=[ "%s:%s" %(basename,self.filename),
+                "\tcc $^ -o $@",
+                "",
+                "clean:",
+                "\t-rm -f %s" % basename,
+                ""]
+
+        return lines
 
     def generate_editor_command(self):
         line_column_arg="+call cursor(%d,%d)" % (self.edit_line,self.edit_column)
@@ -108,6 +126,7 @@ def parse_args(argv):
     parser.add_argument("--editor",help="Editor to use to open the resulting source file.")
     parser.add_argument("--skip-editor",help="Create the source file but don't open it in an editor.",action="store_true")
     parser.add_argument("--tabs",help="Use tabs instead of spaces.",action="store_true")
+    parser.add_argument("--generate-makefile",help="Create a makefile to build the program.",action="store_true")
 
     args=parser.parse_args(argv)
     return args
@@ -130,7 +149,7 @@ def main(argv):
         editor=args.editor
 
     spaces=not args.tabs
-
+    generate_makefile=args.generate_makefile
     try:
         c_program_class=CProgramClasses[editor]
     except:
@@ -140,7 +159,7 @@ def main(argv):
 
 
      #def __init__(self,filename,spaces=True,run_editor=True):
-    c_program_class(filename,spaces=spaces,run_editor=run_editor)
+    c_program_class(filename,spaces=spaces,generate_makefile=generate_makefile,run_editor=run_editor)
 
 if __name__=="__main__":
     main(sys.argv[1:])
