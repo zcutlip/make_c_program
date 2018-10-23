@@ -90,6 +90,8 @@ class CProgramWithTextMate(CProgram):
 
     def generate_editor_command(self):
         line_column_arg="%d:%d" % (self.edit_line,self.edit_column)
+
+        #mate -l 4:5 foo.c
         editor_cmd=[self.EDITOR,"-l",line_column_arg,self.filename]
         return editor_cmd
 
