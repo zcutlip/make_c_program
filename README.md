@@ -12,14 +12,14 @@ Supported editors include:
 
 ```
 $ cd make_c
-$ python setup.py install
+$ python3 setup.py install
 ```
 
 ### Running
 
 Help output:
 ```
-$ make_c.py -h
+$ make_c -h
 
 usage: make_c [-h] [--list-editors] [--editor EDITOR] [--skip-editor] [--tabs]
               [--generate-makefile]
