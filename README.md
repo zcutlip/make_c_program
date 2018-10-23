@@ -21,18 +21,20 @@ Help output:
 ```
 $ make_c.py -h
 
-usage: make_c [-h] [--editor EDITOR] [--list-editors] [--skip-editor] [--tabs]
-              filename
+usage: make_c [-h] [--list-editors] [--editor EDITOR] [--skip-editor] [--tabs]
+              [--generate-makefile]
+              [filename]
 
 positional arguments:
-  filename         Name of the source file to create.
+  filename             Name of the source file to create.
 
 optional arguments:
-  -h, --help       show this help message and exit
-  --editor EDITOR  Editor to use to open the resulting source file.
-  --list-editors   List known editors.
-  --skip-editor    Create the source file but don't open it in an editor.
-  --tabs           Use tabs instead of spaces.
+  -h, --help           show this help message and exit
+  --list-editors       List known editors.
+  --editor EDITOR      Editor to use to open the resulting source file.
+  --skip-editor        Create the source file but don't open it in an editor.
+  --tabs               Use tabs instead of spaces.
+  --generate-makefile  Create a makefile to build the program.
 ```
 
 Creating and editing a file:
@@ -43,6 +45,10 @@ make_c foo.c
 #Edit in SublimeText instead:
 
 make_c foo.c --editor=subl
+
+#Generate a makefile in addition to the C file.
+
+make_c foo.c --generate-makefile
 ```
 ### Adding editor support
 
