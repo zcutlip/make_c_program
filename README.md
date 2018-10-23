@@ -48,16 +48,17 @@ make_c foo.c --editor=subl
 To add additional editors, extend the `CProgram` class and override:
 
 - the `EDITOR` class variable
-- The `open_in_editor()` instance method
+- The `generate_editor_command()` instance method
 
-The `open_in_editor()` method should return an `argv` that represents that editor's commandline incantation in list form suitable for consumption by `subprocess.Popen()`. For example, if your editor takes a `--line` and `--column` argument, you would return:
+The `generate_editor_command()` method should return an `argv` that represents that editor's commandline incantation in list form suitable for consumption by `subprocess.Popen()`. For example, if your editor takes a `--line` and `--column` argument, you would return:
 
 ```python
-[self.EDITOR,
-    "--line",
-    "%d" % self.edit_line,
-    "--column",
-    "%d" % self.edit_column,
-    self.filename]
+def generate_editor_command(self):
+    return [self.EDITOR,
+            "--line",
+            "%d" % self.edit_line,
+            "--column",
+            "%d" % self.edit_column,
+            self.filename]
 ```
 
