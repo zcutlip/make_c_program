@@ -41,8 +41,10 @@ class CProgram(object):
                 "{",
                 tab+"int ret=0;",
                 "",
-                tab+"printf(\"Hello world\\n\")",
+                tab+"printf(\"Hello world\\n\");",
                 self.insert_code_comment, #so we can dyanmically locate its index later
+                "",
+                tab+"return ret;"
                 "}",
                 ""]
         self.lines=lines
