@@ -18,7 +18,7 @@ class CProgramMetaClass(type):
         register(newclass)
         return newclass
 
-class CProgram(object):
+class CProgram(metaclass=CProgramMetaClass):
     __metaclass__=CProgramMetaClass
     FOURSPACES="    "
     TAB="\t"
