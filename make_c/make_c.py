@@ -64,23 +64,25 @@ class CProgram(object):
             print("Error writing %s" % self.filename)
             print("%s" % str(e))
 
-    def open_in_editor(self):
+    def generate_editor_command(self):
         line_column_arg="+call cursor(%d,%d)" % (self.edit_line,self.edit_column)
 
-        #fim foo.c "+call cursor(4,5)"
-        editor_cmd=[self.EDITOR,line_column_arg,self.filename]
-        print editor_cmd
-        p=subprocess.Popen(editor_cmd)
+        #vim foo.c "+call cursor(4,5)"
+        return[self.EDITOR,line_column_arg,self.filename]
+    
+    def open_in_editor(self):
+        p=subprocess.Popen(self.generate_editor_command())
         p.wait()
 
 class CProgramWithSublime(CProgram):
     EDITOR="subl"
-    def open_in_editor(self):
+    def generate_editor_command(self):
         line_column_arg=":%d:%d" % (self.edit_line,self.edit_column)
 
         #subl foo.c:4:5
         editor_cmd=[self.EDITOR,self.filename+line_column_arg]
-        subprocess.Popen(editor_cmd)
+        
+        return editor_cmd
 
 
 
