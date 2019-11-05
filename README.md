@@ -40,6 +40,18 @@ optional arguments:
   --generate-makefile  Create a makefile to build the program.
 ```
 
+List available editors:
+
+```console
+$ make_c  --list-editors
+Known editors:
+
+vim: Vi IMproved, a programmer's text editor
+subl: Sublime Text 3
+mate: TextMate 2
+code: Visual Studio Code
+```
+
 Creating and editing a file:
 
 ```console
