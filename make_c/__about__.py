@@ -1,7 +1,6 @@
 __title__ = "make_c"
 __version__ = "0.1.1"
-__summary__ = 'A utility to create a simple ' +
-'C source file with a main and open it in an editor.'
+__summary__ = 'A utility to create a simple C source file with a main and open it in an editor.'
 
 """
 See PEP 440 for version scheme
