@@ -1,134 +1,16 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
-import subprocess
 import sys
 
 from .version import MakeCAbout
-
-CProgramClasses = {}
-
-
-def register(cls):
-    newclass = cls
-    CProgramClasses[newclass.EDITOR] = newclass
-    return newclass
-
-
-class CProgramMetaClass(type):
-    def __new__(cls, clsname, bases, attrs):
-        newclass = super(CProgramMetaClass, cls).__new__(
-            cls, clsname, bases, attrs)
-        register(newclass)
-        return newclass
-
-
-class CProgram(metaclass=CProgramMetaClass):
-    __metaclass__ = CProgramMetaClass
-    FOURSPACES = "    "
-    TAB = "\t"
-    INSERT_CODE_HERE = "//insert code here"
-    EDITOR = "vim"
-
-    def __init__(self, filename, spaces=True, generate_makefile=False, run_editor=True):
-        self.filename = filename
-        if spaces:
-            tab = self.FOURSPACES
-        else:
-            tab = self.TAB
-
-        self.insert_code_comment = tab + self.INSERT_CODE_HERE
-        lines = ["#include <stdlib.h>",
-                 "#include <stdio.h>",
-                 "#include <unistd.h>",
-                 "#include <string.h>",
-                 "",
-                 "",
-                 "int main(int argc, char **argv)",
-                 "{",
-                 tab + "int ret=0;",
-                 "",
-                 tab + "printf(\"Hello world\\n\");",
-                 self.insert_code_comment,  # so we can dyanmically locate its index later
-                 "",
-                 tab + "return ret;",
-                 "}",
-                 ""]
-        self.lines = lines
-        self.edit_line = self.lines.index(self.insert_code_comment) + 1
-        self.edit_column = len(tab) + 1
-
-        self._write_to_file(self.filename, self.lines)
-        if generate_makefile:
-            self.makefile_lines = self._generate_makefile()
-            self._write_to_file("Makefile", self.makefile_lines)
-
-        if run_editor:
-            self.open_in_editor()
-
-    def _write_to_file(self, filename, lines):
-        try:
-            with open(filename, "w") as outfile:
-                for line in lines:
-                    outfile.write(line + "\n")
-
-        except Exception as e:
-            print("Error writing %s" % self.filename)
-            print("%s" % str(e))
-            raise
-
-    def _generate_makefile(self):
-        basename = os.path.splitext(self.filename)[0]
-
-        lines = ["%s:%s" % (basename, self.filename),
-                 "\tcc $^ -o $@",
-                 "",
-                 "clean:",
-                 "\t-rm -f %s" % basename,
-                 ""]
-
-        return lines
-
-    def generate_editor_command(self):
-        line_column_arg = "+call cursor(%d,%d)" % (self.edit_line,
-                                                   self.edit_column)
-
-        # vim foo.c "+call cursor(4,5)"
-        return[self.EDITOR, line_column_arg, self.filename]
-
-    def open_in_editor(self):
-        p = subprocess.Popen(self.generate_editor_command())
-        p.wait()
-
-
-class CProgramWithSublime(CProgram):
-    EDITOR = "subl"
-
-    def generate_editor_command(self):
-        line_column_arg = ":%d:%d" % (self.edit_line, self.edit_column)
-
-        # subl foo.c:4:5
-        editor_cmd = [self.EDITOR, self.filename + line_column_arg]
-
-        return editor_cmd
-
-
-class CProgramWithTextMate(CProgram):
-    EDITOR = "mate"
-
-    def generate_editor_command(self):
-        line_column_arg = "%d:%d" % (self.edit_line, self.edit_column)
-
-        # mate -l 4:5 foo.c
-        editor_cmd = [self.EDITOR, "-l", line_column_arg, self.filename]
-        return editor_cmd
+from . import CProgramClasses
 
 
 def list_editors():
-    print("Known editors:")
-    for editor in CProgramClasses.keys():
-        print("%s" % editor)
+    print("Known editors:\n")
+    for _, editor_cls in CProgramClasses.items():
+        print("%s" % editor_cls.description())
 
 
 def parse_args(argv):
