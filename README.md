@@ -8,17 +8,18 @@ Supported editors include:
 - SublimeText (`subl`)
 - TextMate (`mate`)
 
-### Installing
+## Installing
 
-```
+```console
 $ cd make_c
 $ python3 setup.py install
 ```
 
-### Running
+## Running
 
 Help output:
-```
+
+```console
 $ make_c -h
 
 usage: make_c [-h] [--list-editors] [--editor EDITOR] [--skip-editor] [--tabs]
@@ -39,7 +40,7 @@ optional arguments:
 
 Creating and editing a file:
 
-```
+```console
 make_c foo.c
 
 #Edit in SublimeText instead:
@@ -50,7 +51,8 @@ make_c foo.c --editor=subl
 
 make_c foo.c --generate-makefile
 ```
-### Adding editor support
+
+## Adding editor support
 
 To add additional editors, extend the `CProgram` class and override:
 
@@ -68,4 +70,3 @@ def generate_editor_command(self):
             "%d" % self.edit_column,
             self.filename]
 ```
-
