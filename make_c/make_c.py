@@ -5,6 +5,8 @@ import os
 import subprocess
 import sys
 
+from .version import MakeCAbout
+
 CProgramClasses = {}
 
 
@@ -130,12 +132,16 @@ def list_editors():
 
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser()
+    description = str(MakeCAbout())
+    parser = argparse.ArgumentParser(description=description)
     grp = parser.add_mutually_exclusive_group(required=True)
     grp.add_argument("filename", nargs='?',
                      help="Name of the source file to create.", default=None)
     grp.add_argument("--list-editors", help="List known editors.",
                      action="store_true", default=False)
+    parser.add_argument("--version", help="Print version string and exit.",
+                        action="version",
+                        version=description)
     parser.add_argument(
         "--editor", help="Editor to use to open the resulting source file.", default="vim")
     parser.add_argument(
