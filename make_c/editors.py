@@ -1,7 +1,6 @@
 import os
 import subprocess
-from pprint import pprint
-from .meta import CProgramMetaClass, CProgramClasses
+from .meta import CProgramMetaClass, CProgramClasses  # noqa: F401
 
 
 class CProgram(metaclass=CProgramMetaClass):
@@ -121,5 +120,4 @@ class CProgramWithVSCode(CProgram):
         path = os.path.realpath(path)
         file_line_arg = "%s:%s:%d" % (self.filename, self.edit_line, self.edit_column)
         editor_cmd = [self.EDITOR, "-n", path, "-g", file_line_arg]
-        pprint(editor_cmd)
         return editor_cmd
