@@ -10,7 +10,8 @@ class CProgram(metaclass=CProgramMetaClass):
     EDITOR = "vim"
     DESCRIPTION = "Vi IMproved, a programmer's text editor"
 
-    def __init__(self, filename, spaces=True, generate_makefile=False, run_editor=True):
+    def __init__(self, filename, spaces=True, generate_makefile=False, run_editor=True, path_to_editor=None):
+        self.editor_path = path_to_editor
         self.filename = filename
         if spaces:
             tab = self.FOURSPACES
@@ -72,9 +73,12 @@ class CProgram(metaclass=CProgramMetaClass):
     def generate_editor_command(self):
         line_column_arg = "+call cursor(%d,%d)" % (self.edit_line,
                                                    self.edit_column)
+        editor = self.EDITOR
+        if self.editor_path:
+            editor = os.path.join(self.editor_path, editor)
 
         # vim foo.c "+call cursor(4,5)"
-        return[self.EDITOR, line_column_arg, self.filename]
+        return[editor, line_column_arg, self.filename]
 
     def open_in_editor(self):
         p = subprocess.Popen(self.generate_editor_command())
