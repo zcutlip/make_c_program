@@ -7,6 +7,9 @@ Supported editors include:
 - vim
 - SublimeText (`subl`)
 - TextMate (`mate`)
+- Visual Studio Code (`code`)
+- nano
+- emacs
 
 ## Installing
 
@@ -20,12 +23,13 @@ $ python3 setup.py install
 Help output:
 
 ```console
+$ make_c --help
 usage: make_c [-h] [--list-editors] [--version] [--editor EDITOR]
               [--skip-editor] [--tabs] [--generate-makefile]
               [filename]
 
 make_c: A utility to create a simple C source file with a main and open it in
-an editor. version 0.1.1
+an editor. version 0.1.4
 
 positional arguments:
   filename             Name of the source file to create.
@@ -43,27 +47,34 @@ optional arguments:
 List available editors:
 
 ```console
-$ make_c  --list-editors
+$ make_c --list-editors
 Known editors:
 
 vim: Vi IMproved, a programmer's text editor
 subl: Sublime Text 3
 mate: TextMate 2
 code: Visual Studio Code
+emacs: GNU project Emacs editor
+nano: Nano's ANOther editor, an enhanced free Pico clone
 ```
 
 Creating and editing a file:
 
 ```console
-make_c foo.c
+# Create foo.c and edit in the default editor, VIM:
+$ make_c foo.c
+
+# Edit using $EDITOR environment variable to specify editor:
+$ export EDITOR=/usr/local/bin/emacs
+$ make_c foo.c
 
 #Edit in SublimeText instead:
 
-make_c foo.c --editor=subl
+$ make_c foo.c --editor=subl
 
 #Generate a makefile in addition to the C file.
 
-make_c foo.c --generate-makefile
+$ make_c foo.c --generate-makefile
 ```
 
 ## Adding editor support
@@ -80,7 +91,7 @@ The `generate_editor_command()` method should return an `argv` that represents t
 
 ```python
 def generate_editor_command(self):
-    return [self.EDITOR,
+    return [self.generate_editor_arg0(),
             "--line",
             "%d" % self.edit_line,
             "--column",
