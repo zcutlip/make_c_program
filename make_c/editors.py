@@ -73,12 +73,17 @@ class CProgram(metaclass=CProgramMetaClass):
 
         return lines
 
-    def generate_editor_command(self):
-        line_column_arg = "+call cursor(%d,%d)" % (self.edit_line,
-                                                   self.edit_column)
+    def generate_editor_arg0(self):
         editor = self.EDITOR
         if self.editor_path:
             editor = os.path.join(self.editor_path, editor)
+
+        return editor
+
+    def generate_editor_command(self):
+        line_column_arg = "+call cursor(%d,%d)" % (self.edit_line,
+                                                   self.edit_column)
+        editor = self.generate_editor_arg0()
 
         # vim foo.c "+call cursor(4,5)"
         return[editor, line_column_arg, self.filename]
@@ -99,8 +104,9 @@ class CProgramWithSublime(CProgram):
     def generate_editor_command(self):
         line_column_arg = ":%d:%d" % (self.edit_line, self.edit_column)
 
+        editor = self.generate_editor_arg0()
         # subl foo.c:4:5
-        editor_cmd = [self.EDITOR, self.filename + line_column_arg]
+        editor_cmd = [editor, self.filename + line_column_arg]
 
         return editor_cmd
 
@@ -113,7 +119,7 @@ class CProgramWithTextMate(CProgram):
         line_column_arg = "%d:%d" % (self.edit_line, self.edit_column)
 
         # mate -l 4:5 foo.c
-        editor_cmd = [self.EDITOR, "-l", line_column_arg, self.filename]
+        editor_cmd = [self.generate_editor_arg0(), "-l", line_column_arg, self.filename]
         return editor_cmd
 
 
@@ -126,5 +132,6 @@ class CProgramWithVSCode(CProgram):
         path = os.path.expanduser(path)
         path = os.path.realpath(path)
         file_line_arg = "%s:%s:%d" % (self.filename, self.edit_line, self.edit_column)
-        editor_cmd = [self.EDITOR, "-n", path, "-g", file_line_arg]
+        editor_cmd = [self.generate_editor_arg0(), "-n", path, "-g", file_line_arg]
+
         return editor_cmd
