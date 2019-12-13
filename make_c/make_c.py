@@ -5,6 +5,7 @@ import sys
 
 from .version import MakeCAbout
 from . import CProgramClasses
+from .environment import EditorFromEnv
 from .editors import DEFAULT_EDITOR
 
 
@@ -51,6 +52,11 @@ def main(argv):
     filename = args.filename
 
     editor = args.editor
+    editor_path = None
+    if not editor:
+        env_editor = EditorFromEnv()
+        editor = env_editor.editor
+        editor_path = env_editor.path
     if not editor:
         editor = DEFAULT_EDITOR
 
