@@ -4,7 +4,7 @@ import argparse
 import sys
 
 from .version import MakeCAbout
-from . import CProgramClasses
+from . import CProgramClasses, UnknownEditorException
 from .environment import EditorFromEnv
 from .editors import DEFAULT_EDITOR
 
@@ -63,8 +63,8 @@ def main(argv):
     spaces = not args.tabs
     generate_makefile = args.generate_makefile
     try:
-        c_program_class = CProgramClasses[editor]
-    except Exception:
+        c_program_class = CProgramClasses.lookup_editor(editor)
+    except UnknownEditorException:
         print("Unknown editor: %s" % editor)
         print("Consider using --skip-editor to create source file without editing.")
         exit(1)
