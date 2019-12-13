@@ -15,6 +15,10 @@ class CProgramClasses:
             raise UnknownEditorException()
         return cls._classes[editor_name]
 
+    @classmethod
+    def editor_classes(cls):
+        return [(editor_name, editor_class) for editor_name, editor_class in cls._classes.items()]
+
 
 class CProgramMetaClass(type):
     def __new__(cls, clsname, bases, attrs):

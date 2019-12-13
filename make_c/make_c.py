@@ -11,7 +11,7 @@ from .editors import DEFAULT_EDITOR
 
 def list_editors():
     print("Known editors:\n")
-    for _, editor_cls in CProgramClasses.items():
+    for _, editor_cls in CProgramClasses.editor_classes():
         print("%s" % editor_cls.description())
 
 
