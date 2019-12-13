@@ -3,6 +3,9 @@ import subprocess
 from .meta import CProgramMetaClass, CProgramClasses  # noqa: F401
 
 
+DEFAULT_EDITOR = "vim"
+
+
 class CProgram(metaclass=CProgramMetaClass):
     FOURSPACES = "    "
     TAB = "\t"
