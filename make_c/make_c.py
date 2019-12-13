@@ -70,8 +70,11 @@ def main(argv):
         raise
         exit(1)
 
-    c_program_class(filename, spaces=spaces,
-                    generate_makefile=generate_makefile, run_editor=run_editor)
+    c_program_class(filename,
+                    spaces=spaces,
+                    generate_makefile=generate_makefile,
+                    run_editor=run_editor,
+                    path_to_editor=editor_path)
 
 
 if __name__ == "__main__":
