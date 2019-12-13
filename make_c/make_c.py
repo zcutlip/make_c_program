@@ -67,7 +67,6 @@ def main(argv):
     except Exception:
         print("Unknown editor: %s" % editor)
         print("Consider using --skip-editor to create source file without editing.")
-        raise
         exit(1)
 
     c_program_class(filename,
