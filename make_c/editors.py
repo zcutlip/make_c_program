@@ -147,3 +147,12 @@ class CprogramWithEmacs(CProgram):
         return editor_cmd
 
 
+class CprogramWithNano(CProgram):
+    EDITOR = "nano"
+    DESCRIPTION = "Nano's ANOther editor, an enhanced free Pico clone"
+
+    def generate_editor_command(self):
+        line_column_arg = "+%d,%d" % (self.edit_line, self.edit_column)
+        editor_cmd = [self.generate_editor_arg0(), line_column_arg,
+                      self.filename]
+        return editor_cmd
