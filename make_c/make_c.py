@@ -5,6 +5,7 @@ import sys
 
 from .version import MakeCAbout
 from . import CProgramClasses
+from .editors import DEFAULT_EDITOR
 
 
 def list_editors():
@@ -25,7 +26,7 @@ def parse_args(argv):
                         action="version",
                         version=description)
     parser.add_argument(
-        "--editor", help="Editor to use to open the resulting source file.", default="vim")
+        "--editor", help="Editor to use to open the resulting source file.")
     parser.add_argument(
         "--skip-editor", help="Create the source file but don't open it in an editor.", action="store_true")
     parser.add_argument(
@@ -50,6 +51,8 @@ def main(argv):
     filename = args.filename
 
     editor = args.editor
+    if not editor:
+        editor = DEFAULT_EDITOR
 
     spaces = not args.tabs
     generate_makefile = args.generate_makefile
