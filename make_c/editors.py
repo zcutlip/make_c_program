@@ -135,3 +135,15 @@ class CProgramWithVSCode(CProgram):
         editor_cmd = [self.generate_editor_arg0(), "-n", path, "-g", file_line_arg]
 
         return editor_cmd
+
+
+class CprogramWithEmacs(CProgram):
+    EDITOR = "emacs"
+    DESCRIPTION = "GNU project Emacs editor"
+
+    def generate_editor_command(self):
+        line_column_arg = "+%d:%d" % (self.edit_line, self.edit_column)
+        editor_cmd = [self.generate_editor_arg0(), line_column_arg, self.filename]
+        return editor_cmd
+
+
