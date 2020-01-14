@@ -58,15 +58,25 @@ emacs: GNU project Emacs editor
 nano: Nano's ANOther editor, an enhanced free Pico clone
 ```
 
+If an editor isn't provided on the command line, it can be specified using an environment. The variables that are used are, in the following order:
+
+1. `MAKE_C_EDITOR`
+2. `EDITOR`
+3. `VISUAL`
+
 Creating and editing a file:
 
 ```console
 # Create foo.c and edit in the default editor, VIM:
 $ make_c foo.c
 
-# Edit using $EDITOR environment variable to specify editor:
-$ export EDITOR=/usr/local/bin/emacs
+# Edit using $MAKE_C_EDITOR environment variable to specify editor:
+$ export MAKE_C_EDITOR=/usr/local/bin/emacs
 $ make_c foo.c
+
+# If MAKE_C_EDITOR isn't set, EDITOR and VISUAL respected, in that order:
+$ unset MAKE_C_EDITOR
+$ export EDITOR=/usr/bin/vim
 
 #Edit in SublimeText instead:
 
