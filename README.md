@@ -29,7 +29,7 @@ usage: make_c [-h] [--list-editors] [--version] [--editor EDITOR]
               [filename]
 
 make_c: A utility to create a simple C source file with a main and open it in
-an editor. version 0.1.4
+an editor. version 0.1.5
 
 positional arguments:
   filename             Name of the source file to create.
