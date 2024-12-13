@@ -15,7 +15,7 @@ def list_editors():
         print("%s" % editor_cls.description())
 
 
-def parse_args(argv):
+def parse_args():
     description = str(MakeCAbout())
     parser = argparse.ArgumentParser(description=description)
     grp = parser.add_mutually_exclusive_group(required=True)
@@ -35,12 +35,12 @@ def parse_args(argv):
     parser.add_argument("--generate-makefile",
                         help="Create a makefile to build the program.", action="store_true")
 
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
     return args
 
 
-def main(argv):
-    args = parse_args(argv)
+def main():
+    args = parse_args()
     run_editor = True
 
     if args.list_editors:
