@@ -19,7 +19,7 @@ setup(name=about["__title__"],
       url="https://github.com/zcutlip/make_c_program",
       packages=['make_c'],
       entry_points={
-          'console_scripts': ['make_c=make_c.command_line:main'],
+          'console_scripts': ['make_c=make_c.make_c:main'],
 },
     python_requires='>=3.3'
 )
