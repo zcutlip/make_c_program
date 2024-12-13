@@ -23,24 +23,25 @@ Help output:
 
 ```console
 $ make_c --help
-usage: make_c [-h] [--list-editors] [--version] [--editor EDITOR]
-              [--skip-editor] [--tabs] [--generate-makefile]
+usage: make_c [-h] [-l] [--version] [--editor EDITOR] [--skip-editor] [-T]
+              [-M]
               [filename]
 
 make_c: A utility to create a simple C source file with a main and open it in
-an editor. version 0.1.5
+an editor. version 0.2.0
 
 positional arguments:
-  filename             Name of the source file to create.
+  filename              Name of the source file to create.
 
-optional arguments:
-  -h, --help           show this help message and exit
-  --list-editors       List known editors.
-  --version            Print version string and exit.
-  --editor EDITOR      Editor to use to open the resulting source file.
-  --skip-editor        Create the source file but don't open it in an editor.
-  --tabs               Use tabs instead of spaces.
-  --generate-makefile  Create a makefile to build the program.
+options:
+  -h, --help            show this help message and exit
+  -l, --list-editors    List known editors.
+  --version             Print version string and exit.
+  --editor EDITOR       Editor to use to open the resulting source file.
+  --skip-editor         Create the source file but don't open it in an editor.
+  -T, --tabs            Use tabs instead of spaces.
+  -M, --generate-makefile
+                        Create a makefile to build the program.
 ```
 
 List available editors:
