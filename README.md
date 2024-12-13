@@ -14,8 +14,7 @@ Supported editors include:
 ## Installing
 
 ```console
-$ cd make_c
-$ python3 setup.py install
+$ pip3 install make-c
 ```
 
 ## Running
