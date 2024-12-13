@@ -119,7 +119,8 @@ class CProgramWithTextMate(CProgram):
         line_column_arg = "%d:%d" % (self.edit_line, self.edit_column)
 
         # mate -l 4:5 foo.c
-        editor_cmd = [self.generate_editor_arg0(), "-l", line_column_arg, self.filename]
+        editor_cmd = [self.generate_editor_arg0(),
+                      "-l", line_column_arg, self.filename]
         return editor_cmd
 
 
@@ -131,8 +132,10 @@ class CProgramWithVSCode(CProgram):
         path = os.path.dirname(self.filename)
         path = os.path.expanduser(path)
         path = os.path.realpath(path)
-        file_line_arg = "%s:%s:%d" % (self.filename, self.edit_line, self.edit_column)
-        editor_cmd = [self.generate_editor_arg0(), "-n", path, "-g", file_line_arg]
+        file_line_arg = "%s:%s:%d" % (
+            self.filename, self.edit_line, self.edit_column)
+        editor_cmd = [self.generate_editor_arg0(), "-n", path,
+                      "-g", file_line_arg]
 
         return editor_cmd
 
@@ -143,7 +146,8 @@ class CprogramWithEmacs(CProgram):
 
     def generate_editor_command(self):
         line_column_arg = "+%d:%d" % (self.edit_line, self.edit_column)
-        editor_cmd = [self.generate_editor_arg0(), line_column_arg, self.filename]
+        editor_cmd = [self.generate_editor_arg0(), line_column_arg,
+                      self.filename]
         return editor_cmd
 
 
