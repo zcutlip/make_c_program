@@ -21,7 +21,7 @@ def parse_args():
     grp = parser.add_mutually_exclusive_group(required=True)
     grp.add_argument("filename", nargs='?',
                      help="Name of the source file to create.", default=None)
-    grp.add_argument("--list-editors", help="List known editors.",
+    grp.add_argument("-l", "--list-editors", help="List known editors.",
                      action="store_true", default=False)
     parser.add_argument("--version", help="Print version string and exit.",
                         action="version",
@@ -31,8 +31,8 @@ def parse_args():
     parser.add_argument(
         "--skip-editor", help="Create the source file but don't open it in an editor.", action="store_true")
     parser.add_argument(
-        "--tabs", help="Use tabs instead of spaces.", action="store_true")
-    parser.add_argument("--generate-makefile",
+        "-T", "--tabs", help="Use tabs instead of spaces.", action="store_true")
+    parser.add_argument("-M", "--generate-makefile",
                         help="Create a makefile to build the program.", action="store_true")
 
     args = parser.parse_args()
