@@ -1,5 +1,5 @@
 __title__ = "make_c"
-__version__ = "0.2.0.dev0"
+__version__ = "0.2.0"
 __summary__ = 'A utility to create a simple C source file with a main and open it in an editor.'
 
 """
