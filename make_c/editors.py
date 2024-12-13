@@ -1,7 +1,7 @@
 import os
 import subprocess
-from .meta import CProgramMetaClass, CProgramClasses  # noqa: F401
 
+from .meta import CProgramClasses, CProgramMetaClass  # noqa: F401
 
 DEFAULT_EDITOR = "vim"
 
@@ -86,7 +86,7 @@ class CProgram(metaclass=CProgramMetaClass):
         editor = self.generate_editor_arg0()
 
         # vim foo.c "+call cursor(4,5)"
-        return[editor, line_column_arg, self.filename]
+        return [editor, line_column_arg, self.filename]
 
     def open_in_editor(self):
         p = subprocess.Popen(self.generate_editor_command())

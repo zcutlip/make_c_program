@@ -3,10 +3,10 @@
 import argparse
 import sys
 
-from .version import MakeCAbout
 from . import CProgramClasses, UnknownEditorException
-from .environment import EditorFromEnv
 from .editors import DEFAULT_EDITOR
+from .environment import EditorFromEnv
+from .version import MakeCAbout
 
 
 def list_editors():
